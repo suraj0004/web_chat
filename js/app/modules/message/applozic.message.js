@@ -185,6 +185,7 @@ function AlMessageService() {
     window.Applozic.ALApiService.getMessages({
       data: data,
       success: function(response) {
+
         var data = response.data;
         resp.status = "success";
         if (typeof data.message === "undefined" || data.message.length === 0) {
@@ -511,6 +512,7 @@ function AlMessageService() {
     }
     messageFeed.source = message.source;
     messageFeed.metadata = message.metadata;
+    console.log(messageFeed);
     return messageFeed;
   };
 

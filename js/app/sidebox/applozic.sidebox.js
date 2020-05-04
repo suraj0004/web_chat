@@ -86,7 +86,7 @@ window.onload = function() {
                     case 'loadContacts':
                         oInstance.loadContacts(params);
                         break;
-										case 'loadContactsForContactList':
+					case 'loadContactsForContactList':
                         oInstance.loadContactsForContactList(params);
                         break;
                     case 'sendMessage':
@@ -3920,9 +3920,10 @@ window.onload = function() {
                 '</ul>' +
                 '</div>' +
                 '</div>';
-            var contactbox = '<li id="li-${contHtmlExpr}" class="li-${contHtmlExpr} ${contIdExpr} ${clientGroupIdExpr}" data-msg-time="${msgCreatedAtTimeExpr}">' + '<a class="${mckLauncherExpr}" href="#" target="_self" data-mck-conversationid="${conversationExpr}" data-mck-id="${contIdExpr}" data-mck-clientGroupId ="${clientGroupId}" data-isgroup="${contTabExpr}">' + '<div class="mck-row" title="${contNameExpr}">' + '<div class="mck-conversation-topic mck-truncate ${contHeaderExpr}">${titleExpr}</div>' + '<div class="blk-lg-3">{{html contImgExpr}}</div>' + '<div class="blk-lg-9">' + '<div class="mck-row">' + '<div class="blk-lg-8 mck-cont-name mck-truncate"><div class="mck-ol-status ${contOlExpr}"><span class="mck-ol-icon" title="${onlineLabel}"></span>&nbsp;</div><strong>${contNameExpr}</strong></div>' + '<div class="mck-text-muted move-right mck-cont-msg-date mck-truncate blk-lg-4">${msgCreatedDateExpr}</div></div>' + '<div class="mck-row">' + '<div class="mck-cont-msg-wrapper blk-lg-6 mck-truncate msgTextExpr"></div>' + '<div class="mck-unread-count-box move-right mck-truncate ${contUnreadExpr}"><span class="mck-unread-count-text">{{html contUnreadCount}}</span></div>' + '</div></div></div></a></li>';
+            var contactbox = '<li id="li-${contHtmlExpr}" class="li-${contHtmlExpr} ${contIdExpr} ${clientGroupIdExpr}" data-msg-time="${msgCreatedAtTimeExpr}">' + '<a class="${mckLauncherExpr}" href="#" target="_self" data-mck-conversationid="${conversationExpr}" data-mck-id="${contIdExpr}" data-mck-clientGroupId ="${clientGroupId}" data-isgroup="${contTabExpr}">' + '<div class="mck-row" title="${contNameExpr}">' + '<div class="mck-conversation-topic mck-truncate ${contHeaderExpr}">${titleExpr}</div>' + '<div class="blk-lg-3">{{html contImgExpr}}</div>' + '<div class="blk-lg-9">' + '<div class="mck-row">' + '<div class="blk-lg-8 mck-cont-name mck-truncate"><div class="mck-ol-status ${contOlExpr}"><span class="mck-ol-icon" title="${onlineLabel}"></span>&nbsp;</div><strong>${contNameExpr} </strong> <br> <small> ${contNameDetails_age_height} </small>   <br> <small> ${contNameDetails_community_caste} </small>  <br> <small> ${contNameDetails_occupation} </small>  <br> <small> ${contNameDetails_salary} </small>  </div>' + '<div class="mck-text-muted move-right mck-cont-msg-date mck-truncate blk-lg-4">${msgCreatedDateExpr}</div></div>' + '<div class="mck-row">' + '<div class="mck-cont-msg-wrapper blk-lg-6 mck-truncate msgTextExpr"></div>' + '<div class="mck-unread-count-box move-right mck-truncate ${contUnreadExpr}"><span class="mck-unread-count-text">{{html contUnreadCount}}</span></div>' + '</div></div></div></a></li>';
             var convbox = '<li id="li-${convIdExpr}" class="${convIdExpr}">' + '<a class="${mckLauncherExpr}" href="#" target="_self" data-mck-conversationid="${convIdExpr}" data-mck-id="${tabIdExpr}" data-isgroup="${isGroupExpr}" data-mck-topicid="${topicIdExpr}" data-isconvtab="true">' + '<div class="mck-row mck-truncate" title="${convTitleExpr}">${convTitleExpr}</div>' + '</a></li>';
             var searchContactbox = '<li id="li-${contHtmlExpr}" class="${contIdExpr}"><a class="applozic-launcher" href="#" target="_self" applozic-launcher data-mck-id="${contIdExpr}" data-isgroup="${contTabExpr}"><div class="mck-row" title="${contNameExpr}">' + '<div class="blk-lg-3">{{html contImgExpr}}</div>' + '<div class="blk-lg-9"><div class="mck-row"><div class="blk-lg-12 mck-cont-name mck-truncate"><strong>${contNameExpr}</strong>' + '<div class="move-right mck-group-count-box mck-group-count-text ${displayGroupUserCountExpr}">${groupUserCountExpr}</div></div>' + '<div class="blk-lg-12 mck-text-muted">${contLastSeenExpr}</div></div></div></div></a></li>';
+            
             $applozic.template("convTemplate", convbox);
             $applozic.template("messageTemplate", markup);
             $applozic.template('contactTemplate', contactbox);
@@ -4656,8 +4657,8 @@ window.onload = function() {
                     }
                     if (typeof data.message.length === 'undefined') {
                         if (data.message.groupId) {
-														mckGroupService.addGroupFromMessage(data.message, false, function(group, message, update){
-															_this.updateRecentConversationList(group, message, update);
+														mckGroupService.addGroupFromMessage(data.message , false, function(group, message, update){
+															_this.updateRecentConversationList(group, message , update);
 														});
                         } else {
                             _this.addContactsFromMessage(data.message);
@@ -5131,7 +5132,11 @@ window.onload = function() {
                     onlineLabel: MCK_LABELS['online'],
                     contUnreadExpr: unreadCountStatus,
                     contUnreadCount: unreadCount,
-                    contNameExpr: displayName,
+                    contNameExpr: displayName ,
+                    contNameDetails_age_height : "32Yr, 5ft 2in,",
+                    contNameDetails_community_caste : "Kumaoni/Brahmin,",
+                    contNameDetails_occupation : "Government Employee,",
+                    contNameDetails_salary : "Rs.4,00,001-5,00,000",
                     conversationExpr: conversationId,
                     contHeaderExpr: isContHeader,
                     titleExpr: title,
@@ -5140,6 +5145,8 @@ window.onload = function() {
                     msgCreatedDateExpr: message ? mckDateUtils.getTimeOrDate(message.createdAtTime, true) : ''
                 }];
                 var latestCreatedAtTime = $applozic('#' + $listId + ' li:nth-child(1)').data('msg-time');
+                // alert("asddsa");
+                console.log(contactList);
                 if (typeof latestCreatedAtTime === "undefined" || (message ? message.createdAtTime : '') >= latestCreatedAtTime || ($listId.indexOf("search") !== -1 && prepend)) {
                     $applozic.tmpl('contactTemplate', contactList).prependTo('#' + $listId);
                 } else {
@@ -5271,6 +5278,8 @@ window.onload = function() {
                             convTitleExpr: title,
                             mckLauncherExpr: MCK_LAUNCHER
                         }];
+
+                         
                         $applozic.tmpl("convTemplate", convList).appendTo($mck_conversation_list);
                     }
                 });
